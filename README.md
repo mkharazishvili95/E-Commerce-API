@@ -69,17 +69,15 @@ He also has the right to cancel the order and in this case the amount paid to th
 /api/Admin/PurchaseCancellation?purchaseId={id?}            <=(Delete purchase)
 
 ## What I have made:
-I created models: User, Admin, Bank, Purchase.
-I added two-factor authentication. There are Admin and User with different rights.
-(I used the following Nuget packages: Microsoft.AspNetCore.Authentication.JwtBearer, Microsoft.AspNetCore.Identity.EntityFrameworkCore)
-I created a User registration and login form.I added validations to the RegisterModels 
-(eg the user's age must be 18 years or older, also he can't be registered in the database with an existing user's Mail and UserName).(I used FluentValidator for it.)
-I also added validation to the product addition service, which only admin has the right to add. I created services for models and wrote business logic. 
-I connected the project to the database(SQL) I created under the name ECommerceSQL(I used: Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.SqlServer, Microsoft.EntityFrameworkCore.Tools for it). Passwords of registered users are included in the database in a hashed state, for this I used: TweetinviAPI.
-I added the logs. Logged user data goes to the database, which we access with the select * from dbo.Loggs code in SQL and see information about which User logged in, what role the User has and the time and when it was logged out.
-I tested everything with Postman to return the correct status codes on requests. Everything works.
-And finally, I created a NUnit project and made a FakeServices folder where I included the services in the project.
-I wrote the tests and all 23 tests are successful.
+I created models: User, Product, BankModel, PurchaseModel.
+I created 2Role-based authorization. (I used the following Nuget packages: Microsoft.AspNetCore.Identity.EntityFrameworkCore, Microsoft.AspNetCore.Authentication.JwtBearer) I have Admin and User in the project. To receive services, a person must first register. I created a user registration model and a login model. I made validations for the registration model (eg the user's age must be 18 or older and the UserName and E-mail must not be identical to the UserName and E-Mail of the user in the database). For validations I used: FluentValidation. After user registration and logging in, log information is stored in the database (Select * from dbo.Loggs - outputs UserName, role and log-in date of the logged-in user), for this I created a Logs model. After logging in, the user is assigned a token that is generated (I specified a conditional time of 365 days - 1 year)
+And after writing the secret key of this token to JWT.IO, this token becomes valid, which allows the user to perform various operations and receive services.
+I created the already mentioned Product model, and I also made validations for it. Only admin can add products. I also created services: AdminService, UserService, ProductService. I wrote business logic in it. Users who are already logged in can see their balance, as well as information on their profile. View the list of added products and buy any. After purchasing the products, the amount on his balance will be transferred to the bank account that I have created. He can also see his purchases.
+The admin has the right to get information about all users, get information about specific users by Id, and also get information about users sorted by ShippingAddress.
+He also has the right to block any user (except another admin). A blocked user is not allowed to purchase the product. Admin also has the right to unblock a blocked user.
+It can also add a new product or modify an existing one. Also delete the product (after deleting the product, if any customer has purchased this product, the money is automatically returned from the bank account). Also cancel any customer order. (After cancellation, the user will automatically get back the amount paid for this product, which will be transferred from the bank to his account) I connected the project with the database (SQL that I created under the name of E-CommerceSQL).
+For this I used: Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.SqlServer, Microsoft.EntityFrameworkCore.Tools.
+The passwords entered in the database are in a hashed state, for this I used: TweetinviAPI.
+I tested the project with Postman to output the status codes I expected and everything works fine.
+I also created a NUnit project where I created FakeServices where I included the existing services in the project. I wrote the tests and all 23 tests ran successfully.
 Everything works perfectly.
-
-
