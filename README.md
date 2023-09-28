@@ -80,7 +80,7 @@ Admin also has the right to unblock a blocked user.
 It can also add a new product or modify an existing one. Also delete the product (after deleting the product, if any customer has purchased this product, the money is automatically returned from the bank account). Also cancel any customer order. (After cancellation, the user will automatically get back the amount paid for this product, which will be transferred from the bank to his account)
 I created a Context file with the name: ECommerceContext, where I included the models in the project that I wanted to transfer to the database. It also creates an admin in the database after adding migrations.
 I connected the project with the database (SQL that I created under the name of E-CommerceSQL).
-For this I used: Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.SqlServer, Microsoft.EntityFrameworkCore.Tools.
+For this I used: Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.SqlServer, Microsoft.EntityFrameworkCore.Tools.(Microsoft SQL Server Management Studio)
 The passwords entered in the database are in a hashed state, for this I used: TweetinviAPI.
 I tested the project with Postman to output the status codes I expected and everything works fine.
 I also created a NUnit project where I created FakeServices where I included the existing services in the project. I wrote the tests and all 23 tests ran successfully.
